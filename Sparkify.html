@@ -4,8 +4,8 @@
 
 <title>Sparkify</title>
 
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576629426498&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=0&amp;rji=0&amp;stealth=0"></script>
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576629426498&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576752549627&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;stealth=1&amp;uag="></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576752549627&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -15344,11 +15344,19 @@ div#notebook {
     <span class="s1">&#39;acc_active_days&#39;</span><span class="p">,</span> <span class="n">acc_active_days</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">registration</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="c1"># Convert gender to binary column</span>
-<span class="c1">#df = df.withColumn(&#39;gender_male&#39;, f.when(df.gender == &#39;M&#39;, 1).otherwise(0))</span>
+<span class="c1"># List of unique page entries</span>
+<span class="n">pages</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">page</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">dropDuplicates</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()]</span>
 
-<span class="c1"># Convert subscription level to binary column</span>
-<span class="c1">#df = df.withColumn(&#39;paid_level&#39;, f.when(df.level == &#39;paid&#39;, 1).otherwise(0))</span>
+<span class="c1"># One hot encoding for pages</span>
+<span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">pages</span><span class="p">:</span>
+    <span class="n">page_col</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_page&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="n">page_col</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">page</span> <span class="o">==</span> <span class="n">page</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># label encoding gender column</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;gender_male&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">gender</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># label encoding level column</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s1">&#39;paid_level&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">level</span> <span class="o">==</span> <span class="s1">&#39;paid&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="c1">#df = df.withColumn(&quot;label&quot;, df[&quot;churn&quot;].cast(DoubleType()))</span>
 </pre></div>
 
@@ -15362,20 +15370,20 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="k">import</span> <span class="n">OneHotEncoderEstimator</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#from pyspark.ml.feature import OneHotEncoderEstimator</span>
 
 <span class="c1">#Index</span>
-<span class="n">Gender_indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s1">&#39;gender_idx&#39;</span><span class="p">)</span>
-<span class="n">User_indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;userAgent&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s1">&#39;user_idx&#39;</span><span class="p">)</span>
-<span class="n">page_indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;page&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;page_idx&quot;</span><span class="p">)</span>
-<span class="n">level_indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;level&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;level_idx&quot;</span><span class="p">)</span>
+<span class="c1">#Gender_indexer = StringIndexer(inputCol=&quot;gender&quot;, outputCol=&#39;gender_idx&#39;)</span>
+<span class="c1">#User_indexer = StringIndexer(inputCol=&quot;userAgent&quot;, outputCol=&#39;user_idx&#39;)</span>
+<span class="c1">#page_indexer = StringIndexer(inputCol=&quot;page&quot;, outputCol=&quot;page_idx&quot;)</span>
+<span class="c1">#level_indexer = StringIndexer(inputCol=&quot;level&quot;, outputCol=&quot;level_idx&quot;)</span>
 
 
 <span class="c1">#Encode</span>
-<span class="n">Gender_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoderEstimator</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gender_idx&#39;</span><span class="p">],</span> <span class="n">outputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gender_Vec&#39;</span><span class="p">])</span>
-<span class="n">User_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoderEstimator</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user_idx&#39;</span><span class="p">],</span> <span class="n">outputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user_Vec&#39;</span><span class="p">])</span>
-<span class="n">page_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoderEstimator</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page_idx&quot;</span><span class="p">],</span><span class="n">outputCols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;page_Vec&quot;</span><span class="p">])</span>
-<span class="n">level_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoderEstimator</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;level_idx&#39;</span><span class="p">],</span> <span class="n">outputCols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;level_Vec&#39;</span><span class="p">])</span>
+<span class="c1">#Gender_encoder = OneHotEncoderEstimator(inputCols=[&#39;gender_idx&#39;], outputCols=[&#39;gender_Vec&#39;])</span>
+<span class="c1">#User_encoder = OneHotEncoderEstimator(inputCols=[&#39;user_idx&#39;], outputCols=[&#39;user_Vec&#39;])</span>
+<span class="c1">#page_encoder = OneHotEncoderEstimator(inputCols=[&quot;page_idx&quot;],outputCols=[&quot;page_Vec&quot;])</span>
+<span class="c1">#level_encoder = OneHotEncoderEstimator(inputCols=[&#39;level_idx&#39;], outputCols=[&#39;level_Vec&#39;])</span>
 </pre></div>
 
     </div>
@@ -15430,6 +15438,27 @@ div#notebook {
  |-- month: integer (nullable = true)
  |-- year: integer (nullable = true)
  |-- acc_active_days: double (nullable = true)
+ |-- Cancel_page: integer (nullable = false)
+ |-- SubmitDowngrade_page: integer (nullable = false)
+ |-- ThumbsDown_page: integer (nullable = false)
+ |-- Home_page: integer (nullable = false)
+ |-- Downgrade_page: integer (nullable = false)
+ |-- RollAdvert_page: integer (nullable = false)
+ |-- Logout_page: integer (nullable = false)
+ |-- SaveSettings_page: integer (nullable = false)
+ |-- CancellationConfirmation_page: integer (nullable = false)
+ |-- About_page: integer (nullable = false)
+ |-- Settings_page: integer (nullable = false)
+ |-- AddtoPlaylist_page: integer (nullable = false)
+ |-- AddFriend_page: integer (nullable = false)
+ |-- NextSong_page: integer (nullable = false)
+ |-- ThumbsUp_page: integer (nullable = false)
+ |-- Help_page: integer (nullable = false)
+ |-- Upgrade_page: integer (nullable = false)
+ |-- Error_page: integer (nullable = false)
+ |-- SubmitUpgrade_page: integer (nullable = false)
+ |-- gender_male: integer (nullable = false)
+ |-- paid_level: integer (nullable = false)
 
 </pre>
 </div>
@@ -15452,53 +15481,14 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Instantiate standard scaler</span>
+<span class="c1">#scaler = StandardScaler(inputCol=&quot;input_features&quot;, outputCol=&quot;features&quot;, withStd=True)</span>
+
+<span class="c1"># Split code for training / validation</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>root
- |-- artist: string (nullable = true)
- |-- auth: string (nullable = true)
- |-- firstName: string (nullable = true)
- |-- gender: string (nullable = true)
- |-- itemInSession: long (nullable = true)
- |-- lastName: string (nullable = true)
- |-- length: double (nullable = true)
- |-- level: string (nullable = true)
- |-- location: string (nullable = true)
- |-- method: string (nullable = true)
- |-- page: string (nullable = true)
- |-- registration: long (nullable = true)
- |-- sessionId: long (nullable = true)
- |-- song: string (nullable = true)
- |-- status: long (nullable = true)
- |-- ts: long (nullable = true)
- |-- userAgent: string (nullable = true)
- |-- userId: string (nullable = true)
- |-- churn: long (nullable = true)
- |-- timestamp: date (nullable = true)
- |-- day: integer (nullable = true)
- |-- month: integer (nullable = true)
- |-- year: integer (nullable = true)
- |-- acc_active_days: double (nullable = true)
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -15508,11 +15498,13 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Instantiate standard scaler</span>
-<span class="c1"># scaler = StandardScaler(inputCol=&quot;input_features&quot;, outputCol=&quot;features&quot;, withStd=True)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Fit feature engineering into a pipeline as same preprocessing will be used across all models.</span>
 
-<span class="c1"># Split code for training / validation</span>
-<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+<span class="n">indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+
+<span class="c1">#Feat_eng = Pipeline(stages=[Gender_indexer, User_indexer,level_indexer, Gender_encoder, User_encoder,level_encoder, indexer]);</span>
+<span class="c1">#Feat_eng_trained = Feat_eng.fit(train)</span>
+<span class="c1">#train = Feat_eng_trained.transform(train)</span>
 </pre></div>
 
     </div>
@@ -15567,6 +15559,27 @@ div#notebook {
  |-- month: integer (nullable = true)
  |-- year: integer (nullable = true)
  |-- acc_active_days: double (nullable = true)
+ |-- Cancel_page: integer (nullable = false)
+ |-- SubmitDowngrade_page: integer (nullable = false)
+ |-- ThumbsDown_page: integer (nullable = false)
+ |-- Home_page: integer (nullable = false)
+ |-- Downgrade_page: integer (nullable = false)
+ |-- RollAdvert_page: integer (nullable = false)
+ |-- Logout_page: integer (nullable = false)
+ |-- SaveSettings_page: integer (nullable = false)
+ |-- CancellationConfirmation_page: integer (nullable = false)
+ |-- About_page: integer (nullable = false)
+ |-- Settings_page: integer (nullable = false)
+ |-- AddtoPlaylist_page: integer (nullable = false)
+ |-- AddFriend_page: integer (nullable = false)
+ |-- NextSong_page: integer (nullable = false)
+ |-- ThumbsUp_page: integer (nullable = false)
+ |-- Help_page: integer (nullable = false)
+ |-- Upgrade_page: integer (nullable = false)
+ |-- Error_page: integer (nullable = false)
+ |-- SubmitUpgrade_page: integer (nullable = false)
+ |-- gender_male: integer (nullable = false)
+ |-- paid_level: integer (nullable = false)
 
 </pre>
 </div>
@@ -15579,90 +15592,6 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Fit feature engineering into a pipeline as same preprocessing will be used across all models.</span>
-
-<span class="n">indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
-
-<span class="n">Feat_eng</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">Gender_indexer</span><span class="p">,</span> <span class="n">User_indexer</span><span class="p">,</span> <span class="n">page_indexer</span><span class="p">,</span><span class="n">level_indexer</span><span class="p">,</span> <span class="n">Gender_encoder</span><span class="p">,</span> <span class="n">User_encoder</span><span class="p">,</span> <span class="n">page_encoder</span><span class="p">,</span><span class="n">level_encoder</span><span class="p">,</span> <span class="n">indexer</span><span class="p">]);</span>
-<span class="n">Feat_eng_trained</span> <span class="o">=</span> <span class="n">Feat_eng</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-<span class="n">train</span> <span class="o">=</span> <span class="n">Feat_eng_trained</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>root
- |-- artist: string (nullable = true)
- |-- auth: string (nullable = true)
- |-- firstName: string (nullable = true)
- |-- gender: string (nullable = true)
- |-- itemInSession: long (nullable = true)
- |-- lastName: string (nullable = true)
- |-- length: double (nullable = true)
- |-- level: string (nullable = true)
- |-- location: string (nullable = true)
- |-- method: string (nullable = true)
- |-- page: string (nullable = true)
- |-- registration: long (nullable = true)
- |-- sessionId: long (nullable = true)
- |-- song: string (nullable = true)
- |-- status: long (nullable = true)
- |-- ts: long (nullable = true)
- |-- userAgent: string (nullable = true)
- |-- userId: string (nullable = true)
- |-- churn: long (nullable = true)
- |-- timestamp: date (nullable = true)
- |-- day: integer (nullable = true)
- |-- month: integer (nullable = true)
- |-- year: integer (nullable = true)
- |-- acc_active_days: double (nullable = true)
- |-- gender_idx: double (nullable = false)
- |-- user_idx: double (nullable = false)
- |-- page_idx: double (nullable = false)
- |-- level_idx: double (nullable = false)
- |-- gender_Vec: vector (nullable = true)
- |-- user_Vec: vector (nullable = true)
- |-- page_Vec: vector (nullable = true)
- |-- level_Vec: vector (nullable = true)
- |-- label: double (nullable = false)
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create features vector</span>
@@ -15682,7 +15611,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Final selected input columns</span>
@@ -15703,7 +15632,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;length&#39;, &#39;day&#39;, &#39;month&#39;, &#39;year&#39;, &#39;acc_active_days&#39;, &#39;gender_Vec&#39;, &#39;user_Vec&#39;, &#39;page_Vec&#39;, &#39;level_Vec&#39;, &#39;label&#39;]
+<pre>[&#39;length&#39;, &#39;day&#39;, &#39;month&#39;, &#39;year&#39;, &#39;acc_active_days&#39;, &#39;Cancel_page&#39;, &#39;SubmitDowngrade_page&#39;, &#39;ThumbsDown_page&#39;, &#39;Home_page&#39;, &#39;Downgrade_page&#39;, &#39;RollAdvert_page&#39;, &#39;Logout_page&#39;, &#39;SaveSettings_page&#39;, &#39;CancellationConfirmation_page&#39;, &#39;About_page&#39;, &#39;Settings_page&#39;, &#39;AddtoPlaylist_page&#39;, &#39;AddFriend_page&#39;, &#39;NextSong_page&#39;, &#39;ThumbsUp_page&#39;, &#39;Help_page&#39;, &#39;Upgrade_page&#39;, &#39;Error_page&#39;, &#39;SubmitUpgrade_page&#39;, &#39;gender_male&#39;, &#39;paid_level&#39;]
 </pre>
 </div>
 </div>
@@ -15714,7 +15643,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_lrm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">featuresCol</span><span class="o">=</span><span class="s2">&quot;input_features&quot;</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">maxIter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">regParam</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
@@ -15729,14 +15658,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create Pipeline</span>
 
-<span class="n">pipeline_lrm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">assembler</span><span class="p">,</span> <span class="n">model_lrm</span><span class="p">]);</span>
-<span class="n">pipeline_rfm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">assembler</span><span class="p">,</span> <span class="n">model_rfm</span><span class="p">]);</span>
-<span class="n">pipeline_gbm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">assembler</span><span class="p">,</span> <span class="n">model_gbm</span><span class="p">]);</span>
+<span class="n">pipeline_lrm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">indexer</span><span class="p">,</span> <span class="n">assembler</span><span class="p">,</span> <span class="n">model_lrm</span><span class="p">]);</span>
+<span class="n">pipeline_rfm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">indexer</span><span class="p">,</span> <span class="n">assembler</span><span class="p">,</span> <span class="n">model_rfm</span><span class="p">]);</span>
+<span class="n">pipeline_gbm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">indexer</span><span class="p">,</span> <span class="n">assembler</span><span class="p">,</span> <span class="n">model_gbm</span><span class="p">]);</span>
 </pre></div>
 
     </div>
@@ -15746,7 +15675,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Fit the model</span>
@@ -15781,9 +15710,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>logistic model exicute time:57.3111526966095
-random forest model exicute time:95.76705551147461
-gradient boosting model exicute time:377.1523551940918
+<pre>logistic model exicute time:94.37662935256958
+random forest model exicute time:119.37954616546631
+gradient boosting model exicute time:371.59114694595337
 </pre>
 </div>
 </div>
@@ -15794,12 +15723,12 @@ gradient boosting model exicute time:377.1523551940918
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Transform the model</span>
 
-<span class="n">test</span> <span class="o">=</span> <span class="n">Feat_eng_trained</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="c1">#test = Feat_eng_trained.transform(test)</span>
 
 <span class="n">pred_lrm_fitted</span> <span class="o">=</span> <span class="n">model_lr_fitted</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="n">pred_rfm_fitted</span> <span class="o">=</span> <span class="n">model_rf_fitted</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
@@ -15813,12 +15742,12 @@ gradient boosting model exicute time:377.1523551940918
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create accuracy and f1 evaluators</span>
-<span class="n">acc_evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span> <span class="o">=</span> <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span><span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">)</span>
-<span class="n">f1_evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span> <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span><span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">)</span>
+<span class="n">acc_evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span> <span class="o">=</span> <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span><span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">);</span>
+<span class="n">f1_evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span> <span class="o">=</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span><span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -15828,13 +15757,13 @@ gradient boosting model exicute time:377.1523551940918
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#print Model Accuracy</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logistic Regression Classifier Accuracy:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_lrm_fitted</span><span class="p">)));</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest  Classifier Accuracy:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_rfm_fitted</span><span class="p">)));</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GBTClassifier  Classifier Accuracy:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_gbm_fitted</span><span class="p">)));</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Classifier Accuracy:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_rfm_fitted</span><span class="p">)));</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GBTClassifier Classifier Accuracy:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_gbm_fitted</span><span class="p">)));</span>
 </pre></div>
 
     </div>
@@ -15851,9 +15780,9 @@ gradient boosting model exicute time:377.1523551940918
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression Classifier Accuracy:1.0
-Random Forest  Classifier Accuracy:0.999985284595915
-GBTClassifier  Classifier Accuracy:1.0
+<pre>Logistic Regression Classifier Accuracy:0.839322129245482
+Random Forest Classifier Accuracy:0.8393572885169819
+GBTClassifier Classifier Accuracy:0.8684164264116447
 </pre>
 </div>
 </div>
@@ -15864,13 +15793,13 @@ GBTClassifier  Classifier Accuracy:1.0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#print Model F1-Score</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Logistic Regression Classifier F1-Score:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_lrm_fitted</span><span class="p">)));</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest  Classifier F1-Score:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_rfm_fitted</span><span class="p">)));</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GBTClassifier  Classifier F1-Score:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_gbm_fitted</span><span class="p">)));</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest Classifier F1-Score:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_rfm_fitted</span><span class="p">)));</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GBTClassifier Classifier F1-Score:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_gbm_fitted</span><span class="p">)));</span>
 </pre></div>
 
     </div>
@@ -15887,9 +15816,9 @@ GBTClassifier  Classifier Accuracy:1.0
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Logistic Regression Classifier F1-Score:1.0
-Random Forest  Classifier F1-Score:0.9999852843192369
-GBTClassifier  Classifier F1-Score:1.0
+<pre>Logistic Regression Classifier F1-Score:0.7660334591687653
+Random Forest Classifier F1-Score:0.7660509050469619
+GBTClassifier Classifier F1-Score:0.8389763099713925
 </pre>
 </div>
 </div>
@@ -15908,13 +15837,14 @@ GBTClassifier  Classifier F1-Score:1.0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create parmater grid</span>
 <span class="n">paramGrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">ParamGridBuilder</span><span class="p">()</span>
-             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxIter</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+             <span class="c1">#.addGrid(model_gbm.maxIter, [25,30])</span>
+             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">stepSize</span><span class="p">,[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.09</span><span class="p">])</span>
              <span class="o">.</span><span class="n">build</span><span class="p">())</span>
 <span class="c1">#Perform crossvalidation</span>
 <span class="n">crossval</span> <span class="o">=</span> <span class="n">CrossValidator</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">pipeline_gbm</span><span class="p">,</span>
@@ -15942,8 +15872,8 @@ GBTClassifier  Classifier F1-Score:1.0
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>GBTClassifier  Classifier Accuracy:1.0
-GBTClassifier  Classifier F1-Score:1.0
+<pre>GBTClassifier  Classifier Accuracy:0.8634062302229097
+GBTClassifier  Classifier F1-Score:0.8298259088173815
 </pre>
 </div>
 </div>
@@ -15963,7 +15893,7 @@ GBTClassifier  Classifier F1-Score:1.0
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><h3 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h3><p>Model to predict customer churn is implemented in this notebook. In the process of Cleaning data rows with no userId were removed, converted gender, user, page, level using one-hot encoding, and added date and time-related columns to calculate the age of the accounts. Ten features were created/utilized for the model. Three models, logistic regression, Random Forest, and GBTClassifier, were used to predict churn. GBTClassifier has a better f1 score and accuracy in-comparison. For data preparation, StringIndexer, OneHotEncoderEstimator, and VectorAssembler were used to preprocessing or synthesizing new features. Since the churned users are limited, F1 score has been used for hyperparameter tuning.</p>
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><h3 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h3><p>Model to predict customer churn is implemented in this notebook. In the process of Cleaning data rows with no userId were removed, converted gender, user, page, level using one-hot encoding, and added date and time-related columns to calculate the age of the accounts. Twenty six features were created/utilized for the model. Three models, logistic regression, Random Forest, and GBTClassifier, were used to predict churn. GBTClassifier has a better f1 score and accuracy in-comparison. For data preparation, StringIndexer, OneHotEncoderEstimator, and VectorAssembler were used to preprocessing or synthesizing new features. Since the churned users are limited, F1 score has been used for hyperparameter tuning.</p>
 <h3 id="Reflections-from-this-final-project.">Reflections from this final project.<a class="anchor-link" href="#Reflections-from-this-final-project.">&#182;</a></h3><p>This project has given exposure to spark environment to analyze a large volume of data that a personal laptop may not be capable of analyzing. By identifying a customer with a high chance to churn, companies can deploy value-adding strategies to retain customers by using targeted promotions and offers.</p>
 <p>One of the interesting yet challenging parts during the project is brainstorming for the new features that we can derive from the data we have on hand. Exploratory data analysis plays a vital role in understanding features and their relationships.</p>
 <p>As a recommendation, churn can be reduced by offering better content to users at a better price, intuitive UI, and family plans will let the user stay subscribed.</p>
@@ -15973,6 +15903,40 @@ A more robust feature set can be developed with more time.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
+<span class="n">call</span><span class="p">([</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;nbconvert&#39;</span><span class="p">,</span> <span class="s1">&#39;Sparkify.ipynb&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[39]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     </div>
   </div>
