@@ -4,8 +4,8 @@
 
 <title>Sparkify</title>
 
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576752549627&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=1&amp;rji=1&amp;stealth=1&amp;uag="></script>
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576752549627&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576818186491&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=0&amp;rji=0&amp;stealth=0"></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576818186491&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -15710,9 +15710,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>logistic model exicute time:94.37662935256958
-random forest model exicute time:119.37954616546631
-gradient boosting model exicute time:371.59114694595337
+<pre>logistic model exicute time:90.2674207687378
+random forest model exicute time:118.14977359771729
+gradient boosting model exicute time:374.85173439979553
 </pre>
 </div>
 </div>
@@ -15842,7 +15842,7 @@ GBTClassifier Classifier F1-Score:0.8389763099713925
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create parmater grid</span>
 <span class="n">paramGrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">ParamGridBuilder</span><span class="p">()</span>
-             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
              <span class="c1">#.addGrid(model_gbm.maxIter, [25,30])</span>
              <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">stepSize</span><span class="p">,[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.09</span><span class="p">])</span>
              <span class="o">.</span><span class="n">build</span><span class="p">())</span>
@@ -15872,8 +15872,8 @@ GBTClassifier Classifier F1-Score:0.8389763099713925
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>GBTClassifier  Classifier Accuracy:0.8634062302229097
-GBTClassifier  Classifier F1-Score:0.8298259088173815
+<pre>GBTClassifier  Classifier Accuracy:0.8995323816890514
+GBTClassifier  Classifier F1-Score:0.8880846057335992
 </pre>
 </div>
 </div>
@@ -15906,7 +15906,7 @@ A more robust feature set can be developed with more time.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
@@ -15923,7 +15923,7 @@ A more robust feature set can be developed with more time.</p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[39]:</div>
+    <div class="prompt output_prompt">Out[40]:</div>
 
 
 
