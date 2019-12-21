@@ -4,8 +4,8 @@
 
 <title>Sparkify</title>
 
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576818186491&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=0&amp;rji=0&amp;stealth=0"></script>
-<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576818186491&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576934330840&amp;type=content-script&amp;dmn=r474340c796848xjupyterd00uxhei.udacity-student-workspaces.com&amp;css=1&amp;js=1&amp;gcss=1&amp;rel=0&amp;rji=0&amp;stealth=0"></script>
+<script type="text/javascript" nonce="38305cc657924417833e594de0f" src="//local.adguard.org?ts=1576934330840&amp;name=AdGuard%20Assistant%20Beta&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;name=AdGuard%20Extra%20Beta&amp;type=user-script"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
@@ -13492,7 +13492,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># drop NAs in columns userId, sessionId and blanks ins userId</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># drop NAs in columns userId, sessionId and blanks in userId</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">,</span> <span class="s1">&#39;sessionId&#39;</span><span class="p">])</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
@@ -15648,7 +15648,7 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_lrm</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">featuresCol</span><span class="o">=</span><span class="s2">&quot;input_features&quot;</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">maxIter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">regParam</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">model_rfm</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">featuresCol</span><span class="o">=</span><span class="s2">&quot;input_features&quot;</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
-<span class="n">model_gbm</span> <span class="o">=</span> <span class="n">GBTClassifier</span><span class="p">(</span><span class="n">featuresCol</span><span class="o">=</span><span class="s2">&quot;input_features&quot;</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span><span class="n">lossType</span><span class="o">=</span><span class="s1">&#39;logistic&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">model_gbm</span> <span class="o">=</span> <span class="n">GBTClassifier</span><span class="p">(</span><span class="n">featuresCol</span><span class="o">=</span><span class="s2">&quot;input_features&quot;</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span><span class="n">lossType</span><span class="o">=</span><span class="s1">&#39;logistic&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">maxIter</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15710,9 +15710,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>logistic model exicute time:90.2674207687378
-random forest model exicute time:118.14977359771729
-gradient boosting model exicute time:374.85173439979553
+<pre>logistic model exicute time:102.80917859077454
+random forest model exicute time:118.5705783367157
+gradient boosting model exicute time:224.92464089393616
 </pre>
 </div>
 </div>
@@ -15782,7 +15782,7 @@ gradient boosting model exicute time:374.85173439979553
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Logistic Regression Classifier Accuracy:0.839322129245482
 Random Forest Classifier Accuracy:0.8393572885169819
-GBTClassifier Classifier Accuracy:0.8684164264116447
+GBTClassifier Classifier Accuracy:0.8630722171436608
 </pre>
 </div>
 </div>
@@ -15818,7 +15818,7 @@ GBTClassifier Classifier Accuracy:0.8684164264116447
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Logistic Regression Classifier F1-Score:0.7660334591687653
 Random Forest Classifier F1-Score:0.7660509050469619
-GBTClassifier Classifier F1-Score:0.8389763099713925
+GBTClassifier Classifier F1-Score:0.8296202425533039
 </pre>
 </div>
 </div>
@@ -15830,21 +15830,31 @@ GBTClassifier Classifier F1-Score:0.8389763099713925
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Model tuning - hyperparameters</p>
+<h1 id="Enhancements">Enhancements<a class="anchor-link" href="#Enhancements">&#182;</a></h1><p>Model tuning - hyperparameters</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Model summary: GBTClassifier has shown relatively better perofrmance in comparison of accuracy and F1 metrics.</p>
+<p>Data is imbalanced due to the rarity of churn events within the data set, which can cause over-fitting of the model.
+An algorithm that performs bootstrapping to select subsets of the data repeatedly is one of the best approaches to handle imbalanced data sets. Given these factors, a gradient boost classifier can be a reliable choice.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Create parmater grid</span>
 <span class="n">paramGrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">ParamGridBuilder</span><span class="p">()</span>
              <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
-             <span class="c1">#.addGrid(model_gbm.maxIter, [25,30])</span>
-             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">stepSize</span><span class="p">,[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.09</span><span class="p">])</span>
+             <span class="o">.</span><span class="n">addGrid</span><span class="p">(</span><span class="n">model_gbm</span><span class="o">.</span><span class="n">maxIter</span><span class="p">,</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span>
+             <span class="c1">#.addGrid(model_gbm.stepSize,[0.1,0.09])</span>
              <span class="o">.</span><span class="n">build</span><span class="p">())</span>
 <span class="c1">#Perform crossvalidation</span>
 <span class="n">crossval</span> <span class="o">=</span> <span class="n">CrossValidator</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">pipeline_gbm</span><span class="p">,</span>
@@ -15882,6 +15892,178 @@ GBTClassifier  Classifier F1-Score:0.8880846057335992
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auc_evaluator</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">metricName</span> <span class="o">=</span> <span class="s2">&quot;areaUnderROC&quot;</span><span class="p">,</span><span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;churn&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GBTClassifier  Classifier Area Under ROC:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f1_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">pred_gbm_fitted_tune</span><span class="p">)));</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GBTClassifier  Classifier Area Under ROC:0.8880846057335992
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cv_mdl</span> <span class="o">=</span> <span class="n">model_gbt_fitted_cv</span><span class="o">.</span><span class="n">bestModel</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#To get best model parmetrs</span>
+<span class="n">cv_mdl</span><span class="o">.</span><span class="n">extractParamMap</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[44]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;cacheNodeIds&#39;, doc=&#39;If false, the algorithm will pass trees to executors to match instances with nodes. If true, the algorithm will cache node IDs for each instance. Caching can speed up training of deeper trees.&#39;): False,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;checkpointInterval&#39;, doc=&#39;set checkpoint interval (&gt;= 1) or disable checkpoint (-1). E.g. 10 means that the cache will get checkpointed every 10 iterations. Note: this setting will be ignored if the checkpoint directory is not set in the SparkContext&#39;): 10,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;featureSubsetStrategy&#39;, doc=&#39;The number of features to consider for splits at each tree node. Supported options: auto, all, onethird, sqrt, log2, (0.0-1.0], [1-n].&#39;): &#39;all&#39;,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;featuresCol&#39;, doc=&#39;features column name&#39;): &#39;input_features&#39;,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;labelCol&#39;, doc=&#39;label column name&#39;): &#39;label&#39;,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;lossType&#39;, doc=&#39;Loss function which GBT tries to minimize (case-insensitive). Supported options: logistic&#39;): &#39;logistic&#39;,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;maxBins&#39;, doc=&#39;Max number of bins for discretizing continuous features.  Must be &gt;=2 and &gt;= number of categories for any categorical feature.&#39;): 32,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;maxDepth&#39;, doc=&#39;Maximum depth of the tree. (&gt;= 0) E.g., depth 0 means 1 leaf node; depth 1 means 1 internal node + 2 leaf nodes.&#39;): 7,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;maxIter&#39;, doc=&#39;maximum number of iterations (&gt;= 0)&#39;): 20,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;maxMemoryInMB&#39;, doc=&#39;Maximum memory in MB allocated to histogram aggregation.&#39;): 256,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;minInfoGain&#39;, doc=&#39;Minimum information gain for a split to be considered at a tree node.&#39;): 0.0,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;minInstancesPerNode&#39;, doc=&#39;Minimum number of instances each child must have after split.  If a split causes the left or right child to have fewer than minInstancesPerNode, the split will be discarded as invalid. Should be &gt;= 1.&#39;): 1,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;predictionCol&#39;, doc=&#39;prediction column name&#39;): &#39;prediction&#39;,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;seed&#39;, doc=&#39;random seed&#39;): 8,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;stepSize&#39;, doc=&#39;Step size (a.k.a. learning rate) in interval (0, 1] for shrinking the contribution of each estimator.&#39;): 0.1,
+ Param(parent=&#39;GBTClassifier_4232bff4cb70&#39;, name=&#39;subsamplingRate&#39;, doc=&#39;Fraction of the training data used for learning each decision tree, in range (0, 1].&#39;): 1.0}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Feature Importances</span>
+<span class="n">va</span> <span class="o">=</span> <span class="n">model_gbt_fitted_cv</span><span class="o">.</span><span class="n">bestModel</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">treeCV</span> <span class="o">=</span> <span class="n">model_gbt_fitted_cv</span><span class="o">.</span><span class="n">bestModel</span><span class="o">.</span><span class="n">stages</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">treeCV</span><span class="p">)</span> <span class="c1">#visualize the best decision tree model</span>
+<span class="c1">#print(treeCV.toDebugString) #print the nodes of the decision tree model</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">va</span><span class="o">.</span><span class="n">getInputCols</span><span class="p">(),</span> <span class="n">treeCV</span><span class="o">.</span><span class="n">featureImportances</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>GBTClassificationModel (uid=GBTClassifier_4232bff4cb70) with 20 trees</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[48]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;length&#39;, 0.0014037917166785795),
+ (&#39;day&#39;, 0.35201116856195414),
+ (&#39;month&#39;, 0.070619954500670351),
+ (&#39;year&#39;, 0.0),
+ (&#39;acc_active_days&#39;, 0.3979620132853311),
+ (&#39;Cancel_page&#39;, 0.0),
+ (&#39;SubmitDowngrade_page&#39;, 0.0),
+ (&#39;ThumbsDown_page&#39;, 0.0),
+ (&#39;Home_page&#39;, 0.0),
+ (&#39;Downgrade_page&#39;, 0.0),
+ (&#39;RollAdvert_page&#39;, 0.0),
+ (&#39;Logout_page&#39;, 0.0),
+ (&#39;SaveSettings_page&#39;, 0.0),
+ (&#39;CancellationConfirmation_page&#39;, 0.0),
+ (&#39;About_page&#39;, 0.0),
+ (&#39;Settings_page&#39;, 0.0),
+ (&#39;AddtoPlaylist_page&#39;, 0.0),
+ (&#39;AddFriend_page&#39;, 0.0),
+ (&#39;NextSong_page&#39;, 0.0),
+ (&#39;ThumbsUp_page&#39;, 0.0),
+ (&#39;Help_page&#39;, 0.0),
+ (&#39;Upgrade_page&#39;, 0.0),
+ (&#39;Error_page&#39;, 0.0),
+ (&#39;SubmitUpgrade_page&#39;, 0.0),
+ (&#39;gender_male&#39;, 0.11826891982558188),
+ (&#39;paid_level&#39;, 0.059734152109784014)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15906,7 +16088,7 @@ A more robust feature set can be developed with more time.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
@@ -15923,7 +16105,7 @@ A more robust feature set can be developed with more time.</p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[40]:</div>
+    <div class="prompt output_prompt">Out[39]:</div>
 
 
 
