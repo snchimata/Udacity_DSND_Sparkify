@@ -4,7 +4,7 @@
 Sparkify is a fictional music streaming platform created by Udacity.   Provided user log data contains demographic, user activities, timestamps, and additional related information. 
 With the provide logs data, a functional model has been developed for predicting users at risk of churn, and thus, sending promotional offers or value-added content to retain the users.
 
-This repository contains the EDA and model development code for Sparkify Capstone Project. More information is available on a [Medium Blog Post](https://medium.com/).
+This repository contains the EDA and model development code for Sparkify Capstone Project. More information is available on a [Medium Blog Post](https://medium.com/@snnchimata/customer-churn-predictions-with-spark-e2ea0d3c434f).
 
 Mini, medium, and large datasets(only on AWS public) are provided for analysis. Mini and medium scale datasets were used on the Udacity cluster, and IBM Watson studio spark environments.
 
@@ -64,7 +64,7 @@ Anaconda environment can be utilized to run and execute provided Jupyter Noteboo
 
 Outputs are generated using mini and medium-sized dataset, which might have introduced a slight imbalance in the data. Feature selection plays a significant role in model predictions. The feature synthesis can be improved with more domain knowledge and expertise. Many ignored features can be converted into consumable form to identify if users are more likely to churn when they log in via mobile versus desktop, Predictive performance in relation to the average length of a given user’s session. A more robust feature set can be developed with more time.
 
-The main findings of the code can be found at the post available [here](https://medium.com/).
+The main findings of the code can be found at the post available [here](https://medium.com/@snnchimata/customer-churn-predictions-with-spark-e2ea0d3c434f).
 
 ## Credits and Acknowledgements
 
